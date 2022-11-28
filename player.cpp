@@ -1,14 +1,21 @@
 #include <GL/glut.h>
 
+#include "ball.cpp"
+
 class Player {
     public:
-    
+
+    Ball *ball;
     float angle=0.0;
     double curX = 0, curY = -0.05, curZ = 0;
     double dirX = 0, dirZ = 1;
     double STEP_SIZE = 0.001;
 
     bool keys[256];
+
+    Player(Ball *ball) {
+        this->ball = ball;
+    }
 
     void keyDown(char c) {
         keys[c] = true;
@@ -42,6 +49,13 @@ class Player {
             double olddirX = dirX;
             dirX = cos(-angleSpeed)*dirX + sin(-angleSpeed)*dirZ;
             dirZ = -sin(-angleSpeed)*olddirX + cos(-angleSpeed)*dirZ;
+        }
+
+        // check if collides with ball
+        if(curX > ball->curX - 0.01 && curX < ball->curX + 0.01) {
+            if(curZ > ball->curZ - 0.01 && curZ < ball->curZ + 0.01) {
+                ball->kick(dirX, dirZ, 150);
+            }
         }
     }
 

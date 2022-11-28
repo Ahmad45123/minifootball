@@ -154,7 +154,7 @@ int main(int argc, char** argv) {
 	glShadeModel(GL_SMOOTH);
 
 	ball = new Ball();
-	player = new Player();
+	player = new Player(ball);
 
 	glutMainLoop();
     return 0;

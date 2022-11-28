@@ -7,16 +7,16 @@ class Ball {
     public:
     double curX = 0, curY = 0.02, curZ = 0;
     double dirX = 0, dirZ = 1;
-    double STEP_SIZE = 0.001;
+    double STEP_SIZE = 0.002;
     int moveFor = 0;
-
-
+    int lastUpdated = 0;
 
     void tick() {
-        while(moveFor > 0) {
+        while(moveFor > 0 && glutGet(GLUT_ELAPSED_TIME) - lastUpdated > 10) {
             curX += dirX * STEP_SIZE;
             curZ += dirZ * STEP_SIZE;
             moveFor --;
+            lastUpdated = glutGet(GLUT_ELAPSED_TIME);
         }
     }
 
