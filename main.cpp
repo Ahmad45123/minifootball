@@ -2,8 +2,10 @@
 #include <math.h>
 
 #include "player.cpp"
+#include "ball.cpp"
 
 Player *player;
+Ball *ball;
 
 void drawWall(double thickness) {
 	glPushMatrix();
@@ -37,7 +39,7 @@ float x=0.0f,z=0.2f;
 
 void processSpecialKeys(int key, int xx, int yy) {
 
-	float fraction = 0.1f;
+	float fraction = 0.01f;
 
 	switch (key) {
 		case GLUT_KEY_LEFT :
@@ -61,7 +63,14 @@ void processSpecialKeys(int key, int xx, int yy) {
 	}
 }
 
+double curCameraY = 0.1;
 void keyDown(unsigned char c, int x, int y) {
+	if(c == 'p') {
+		curCameraY+= 0.01;
+	}
+	if(c == 'l') {
+		curCameraY-= 0.01;
+	}
 	player->keyDown(c);
 }
 void keyUp(unsigned char c, int x, int y) {
@@ -70,6 +79,7 @@ void keyUp(unsigned char c, int x, int y) {
 
 void timerFunc(int tmp) {
 	player->tick();
+	ball->tick();
 	glutTimerFunc(10, timerFunc, 0);
     glutPostRedisplay();
 }
@@ -102,7 +112,7 @@ void renderScene() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
-	gluLookAt(	x, 0.1, z,
+	gluLookAt(	x, curCameraY, z,
 			x+lx, -0.1,  z+lz,
 			0.0f, 1.0f,  0.0f);
 
@@ -112,6 +122,7 @@ void renderScene() {
 	glPopMatrix();
 
 	player->draw();
+	ball->draw();
 
 	glutSwapBuffers();
 }
@@ -142,6 +153,7 @@ int main(int argc, char** argv) {
 
 	glShadeModel(GL_SMOOTH);
 
+	ball = new Ball();
 	player = new Player();
 
 	glutMainLoop();

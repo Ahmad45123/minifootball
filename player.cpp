@@ -3,10 +3,12 @@
 class Player {
     public:
     
-    double curX = 0, curY = 0, curZ = 0;
+    float angle=0.0;
+    double curX = 0, curY = -0.05, curZ = 0;
+    double dirX = 0, dirZ = 1;
     double STEP_SIZE = 0.001;
 
-    int keys[256];
+    bool keys[256];
 
     void keyDown(char c) {
         keys[c] = true;
@@ -17,19 +19,36 @@ class Player {
     }
 
     void tick() {
-        if(keys['w'])
-            curZ -= STEP_SIZE;
-        if(keys['s'])
-            curZ += STEP_SIZE;
-        if(keys['d'])
-            curX += STEP_SIZE;
-        if(keys['a'])
-            curX -= STEP_SIZE;
+        static float fraction = 0.009f;
+        static float angleSpeed = 0.05f;
+
+        if(keys['w']){
+            curX += dirX * fraction;
+            curZ += dirZ * fraction;
+        }
+        if(keys['s']) {
+            curX -= dirX * fraction;
+            curZ -= dirZ * fraction;
+        }
+
+        if(keys['d']) {
+            angle += angleSpeed;
+            double olddirX = dirX;
+            dirX = cos(angleSpeed)*dirX + sin(angleSpeed)*dirZ;
+            dirZ = -sin(angleSpeed)*olddirX + cos(angleSpeed)*dirZ;
+        }
+        if(keys['a']) {
+            angle -= angleSpeed;
+            double olddirX = dirX;
+            dirX = cos(-angleSpeed)*dirX + sin(-angleSpeed)*dirZ;
+            dirZ = -sin(-angleSpeed)*olddirX + cos(-angleSpeed)*dirZ;
+        }
     }
 
     void draw() {
         glPushMatrix();
         glTranslated(curX, curY, curZ);
+        glRotated(angle * 180/M_PI, 0, 1, 0);
 
         glPushMatrix();
         glTranslated(0, 0.09, 0);
@@ -56,6 +75,20 @@ class Player {
         glScaled(0.5, 1.5, 0.5);
         glColor3f(0.88, 0.67, 0.41);
         glutSolidCube(0.01f);
+        glPopMatrix();
+
+        // eyes
+        glPushMatrix();
+        glTranslated(-0.005, 0.09, 0.009);
+        glColor3f(0, 0, 0);
+        glutSolidSphere(0.001, 50, 50);
+        glPopMatrix();
+
+        // eyes 2
+        glPushMatrix();
+        glTranslated(0.005, 0.09, 0.009);
+        glColor3f(0, 0, 0);
+        glutSolidSphere(0.001, 50, 50);
         glPopMatrix();
 
         glPopMatrix();
