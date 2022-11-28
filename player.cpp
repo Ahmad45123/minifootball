@@ -19,7 +19,7 @@ class Player {
     }
 
     void tick() {
-        static float fraction = 0.009f;
+        static float fraction = 0.001f;
         static float angleSpeed = 0.05f;
 
         if(keys['w']){
