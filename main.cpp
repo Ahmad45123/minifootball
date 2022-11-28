@@ -3,6 +3,7 @@
 
 #include "player.cpp"
 #include "ball.cpp"
+#include "net.cpp"
 
 Player *player;
 Ball *ball;
@@ -123,6 +124,7 @@ void renderScene() {
 
 	player->draw();
 	ball->draw();
+	net::drawNet();
 
 	glutSwapBuffers();
 }
