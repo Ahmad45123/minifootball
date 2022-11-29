@@ -15,9 +15,11 @@ class Ball {
     int moveFor = 0;
 
     GLuint texture;
+    GLUquadricObj *quadricObj;
 
     Ball() {
         texture = TextureLoader::loadBitmap("textures/football.bmp");
+        quadricObj = gluNewQuadric();
     }
 
     void tick() {
@@ -57,7 +59,6 @@ class Ball {
         glDisable(GL_COLOR);
         glEnable(GL_TEXTURE_2D);
 
-        GLUquadricObj *quadricObj = gluNewQuadric();
         gluQuadricDrawStyle(quadricObj, GLU_FILL);
         glBindTexture(GL_TEXTURE_2D, texture);
         gluQuadricTexture(quadricObj, GL_TRUE);
