@@ -13,7 +13,6 @@ class Ball {
     double STEP_SIZE = 0;
     double MAX_STEP_SIZE = 0.008;
     int moveFor = 0;
-    int lastUpdated = 0;
 
     void tick() {
         // check if collides with net
@@ -23,13 +22,18 @@ class Ball {
             }
         }
 
-        if(moveFor > 0 /*&& glutGet(GLUT_ELAPSED_TIME) - lastUpdated > 10*/) {
+        // check if collides with wall
+        if(curX > 0.75 || curX < -0.75 || curZ > 0.5 || curZ < -0.5) {
+            dirX *= -1;
+            dirZ *= -1;
+        }
+
+        if(moveFor > 0) {
             curX += dirX * STEP_SIZE;
             curZ += dirZ * STEP_SIZE;
             moveFor --;
             STEP_SIZE -= 0.0001;
             if(STEP_SIZE < 0.0001) STEP_SIZE = 0.0001;
-            lastUpdated = glutGet(GLUT_ELAPSED_TIME);
         }
     }
 
