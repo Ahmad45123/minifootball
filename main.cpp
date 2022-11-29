@@ -79,26 +79,13 @@ void timerFunc(int tmp) {
 }
 
 void changeSize(int w, int h) {
-
-	// Prevent a divide by zero, when window is too short
-	// (you cant make a window of zero width).
 	if (h == 0)
 		h = 1;
 	float ratio =  w * 1.0 / h;
-
-	// Use the Projection Matrix
 	glMatrixMode(GL_PROJECTION);
-
-	// Reset Matrix
 	glLoadIdentity();
-
-	// Set the viewport to be the entire window
 	glViewport(0, 0, w, h);
-
-	// Set the correct perspective.
 	gluPerspective(60.0f, ratio, 0.001f, 1000.0f);
-
-	// Get Back to the Modelview
 	glMatrixMode(GL_MODELVIEW);
 }
 

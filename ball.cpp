@@ -55,7 +55,6 @@ class Ball {
     void draw() {
         glPushMatrix();
         glTranslated(curX, curY, curZ);
-        glColor3f(1, 1, 1);
         glDisable(GL_COLOR);
         glEnable(GL_TEXTURE_2D);
 

@@ -27,14 +27,11 @@ class Player {
     }
 
     void tick() {
-
         if(keys['w']){
-            curX += dirX * STEP_SIZE;
-            curZ += dirZ * STEP_SIZE;
-        }
-        if(keys['s']) {
-            curX -= dirX * STEP_SIZE;
-            curZ -= dirZ * STEP_SIZE;
+            if((curX + dirX * STEP_SIZE) < 0.75 && (curX + dirX * STEP_SIZE) > -0.75 && (curZ + dirZ * STEP_SIZE) < 0.5 && (curZ + dirZ * STEP_SIZE) > -0.5) {
+                curX += dirX * STEP_SIZE;
+                curZ += dirZ * STEP_SIZE;
+            }
         }
 
         if(keys['a']) {
