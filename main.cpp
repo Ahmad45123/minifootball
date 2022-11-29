@@ -1,6 +1,7 @@
 #include <GL/glut.h>
 #include <math.h>
 
+#include "camera.cpp"
 #include "player.cpp"
 #include "ball.cpp"
 #include "stadium.cpp"
@@ -8,70 +9,23 @@
 Player *player;
 Ball *ball;
 
-void setupLights() {
-	GLfloat ambient[] = { 0.7f, 0.7f, 0.7, 1.0f };
-	GLfloat diffuse[] = { 0.6f, 0.6f, 0.6, 1.0f };
-	GLfloat specular[] = { 1.0f, 1.0f, 1.0, 1.0f };
-	GLfloat shininess[] = { 50 };
-	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, ambient);
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse);
-	glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
-	glMaterialfv(GL_FRONT, GL_SHININESS, shininess);
-
-	GLfloat lightIntensity[] = { 0.7f, 0.7f, 1, 1.0f };
-	GLfloat lightPosition[] = { -7.0f, 6.0f, 3.0f, 0.0f };
-	glLightfv(GL_LIGHT0, GL_POSITION, lightIntensity);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, lightIntensity);
-}
-
-// angle of rotation for the camera direction
-float angle=0.0;
-// actual vector representing the camera's direction
-float lx=0.0f,lz=-1.0f;
-// XZ position of the camera
-float x=0.0f,z=0.2f;
-
-void processSpecialKeys(int key, int xx, int yy) {
-
-	float fraction = 0.01f;
-
-	switch (key) {
-		case GLUT_KEY_LEFT :
-			angle -= 0.01f;
-			lx = sin(angle);
-			lz = -cos(angle);
-			break;
-		case GLUT_KEY_RIGHT :
-			angle += 0.01f;
-			lx = sin(angle);
-			lz = -cos(angle);
-			break;
-		case GLUT_KEY_UP :
-			x += lx * fraction;
-			z += lz * fraction;
-			break;
-		case GLUT_KEY_DOWN :
-			x -= lx * fraction;
-			z -= lz * fraction;
-			break;
-	}
-}
-
-double curCameraY = 0.1;
 void keyDown(unsigned char c, int x, int y) {
-	if(c == 'p') {
-		curCameraY+= 0.01;
-	}
-	if(c == 'l') {
-		curCameraY-= 0.01;
-	}
+	Camera::keyDown(c);
 	player->keyDown(c);
 }
 void keyUp(unsigned char c, int x, int y) {
+	Camera::keyUp(c);
 	player->keyUp(c);
+}
+void specialKeysDown(int c, int x, int y) {
+	Camera::specialKeyDown(c);
+}
+void specialKeysUp(int c, int x, int y) {
+	Camera::specialKeyUp(c);
 }
 
 void timerFunc(int tmp) {
+	Camera::tick();
 	player->tick();
 	ball->tick();
 	glutTimerFunc(10, timerFunc, 0);
@@ -93,9 +47,7 @@ void renderScene() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
-	gluLookAt(	x, curCameraY, z,
-			x+lx, -0.1,  z+lz,
-			0.0f, 1.0f,  0.0f);
+	Camera::draw();
 
 	Stadium::draw();
 
@@ -115,7 +67,8 @@ int main(int argc, char** argv) {
 	glutDisplayFunc(renderScene);
 	glutReshapeFunc(changeSize);
 	glutIdleFunc(renderScene);
-	glutSpecialFunc(processSpecialKeys);
+	glutSpecialFunc(specialKeysDown);
+	glutSpecialUpFunc(specialKeysUp);
 	glutKeyboardFunc(keyDown);
 	glutKeyboardUpFunc(keyUp);
 	glutTimerFunc(0, timerFunc, 0);
