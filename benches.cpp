@@ -1,10 +1,10 @@
 #include <GL/glut.h>
 
 namespace benches {
-    void drawBenches() {
+    void deawBench() {
         glPushMatrix();
-            glColor3f(0.53, 0.24, 0.11);
-            glTranslated(0, 0.05, 0);
+            glColor3f(0.24, 0.22, 0.21);
+            glTranslated(0, 0.03, -0.55);
             glPushMatrix();
                 glTranslated(0, -0.015, 0);
                 glScaled(5, 0.55, 1);
@@ -24,6 +24,16 @@ namespace benches {
                 glutSolidCube(0.05);
             glPopMatrix();
         glPopMatrix();
+    }
 
+    void draw() {
+        glPushMatrix(); {
+            glTranslated(-0.4, 0, 0);
+            deawBench();
+        } glPopMatrix();
+        glPushMatrix(); {
+            glTranslated(0.4, 0, 0);
+            deawBench();
+        } glPopMatrix();
     }
 }

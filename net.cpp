@@ -28,7 +28,7 @@ namespace net {
         glPopMatrix();
     }
 
-    void drawNet() {
+    void draw() {
         glPushMatrix();
             glTranslated(netX, 0, netZ);
             glRotated(90, 0, 1, 0);

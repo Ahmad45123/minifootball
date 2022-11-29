@@ -119,14 +119,22 @@ void renderScene() {
 			0.0f, 1.0f,  0.0f);
 
 	glPushMatrix();
-    glColor3f(0.13, 1.00, 0.00);
+    glColor3f(0.00, 0.60, 0.09);
+	drawWall(0.02);
+	glPopMatrix();
+	
+	// Draw outer thing
+	glPushMatrix();
+    glColor3f(0.40, 0.21, 0.02);
+	glTranslated(0, -0.01, 0);
+	glScaled(1.3, 1, 1.3);
 	drawWall(0.02);
 	glPopMatrix();
 
 	player->draw();
 	ball->draw();
-	net::drawNet();
-	benches::drawBenches();
+	net::draw();
+	benches::draw();
 
 	glutSwapBuffers();
 }
