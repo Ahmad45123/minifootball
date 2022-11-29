@@ -12,7 +12,7 @@ class Player {
     double STEP_SIZE = 0.003;
     float ANGLE_SPEED = 0.05f;
 
-    bool keys[256];
+    bool keys[256] = {};
 
     Player(Ball *ball) {
         this->ball = ball;
