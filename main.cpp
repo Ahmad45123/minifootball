@@ -1,12 +1,9 @@
 #include <GL/glut.h>
 #include <math.h>
 
-#include "util.cpp"
-#include "textureLoader.cpp"
 #include "player.cpp"
 #include "ball.cpp"
-#include "net.cpp"
-#include "benches.cpp"
+#include "stadium.cpp"
 
 Player *player;
 Ball *ball;
@@ -105,7 +102,6 @@ void changeSize(int w, int h) {
 	glMatrixMode(GL_MODELVIEW);
 }
 
-GLuint groundText;
 void renderScene() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
@@ -114,29 +110,10 @@ void renderScene() {
 			x+lx, -0.1,  z+lz,
 			0.0f, 1.0f,  0.0f);
 
-	glPushMatrix();
-	glDisable(GL_COLOR);
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, groundText);
-	glScaled(1.5, 0.02, 1.0);
-	util::drawCube(1, 4);
-	glDisable(GL_TEXTURE_2D);
-	glEnable(GL_COLOR);
-	glPopMatrix();
-	
-	// Draw outer thing
-	glPushMatrix();
-    glColor3f(0.40, 0.21, 0.02);
-	glTranslated(0, -0.01, 0);
-	glScaled(1.3, 1, 1.3);
-	glScaled(1.5, 0.02, 1.0);
-	glutSolidCube(1);
-	glPopMatrix();
+	Stadium::draw();
 
 	player->draw();
 	ball->draw();
-	net::draw();
-	benches::draw();
 
 	glutSwapBuffers();
 }
@@ -167,9 +144,10 @@ int main(int argc, char** argv) {
 
 	glShadeModel(GL_SMOOTH);
 
+	Stadium::init();
+
 	ball = new Ball();
 	player = new Player(ball);
-	groundText = TextureLoader::loadBitmap("textures/grass.bmp");
 
 	glutMainLoop();
     return 0;
