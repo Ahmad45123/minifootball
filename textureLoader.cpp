@@ -1,3 +1,6 @@
+#ifndef TEXTURELOADER_FILE
+#define TEXTURELOADER_FILE
+
 #include <stdio.h>
 #include <GL/glut.h>
 
@@ -60,3 +63,5 @@ namespace TextureLoader {
         return textureID;
     }
 }
+
+#endif

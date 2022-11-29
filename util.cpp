@@ -1,3 +1,6 @@
+#ifndef UTIL_FILE
+#define UTIL_FILE
+
 #include <GL/glut.h>
 
 namespace util {
@@ -45,3 +48,5 @@ namespace util {
         }
     }
 }
+
+#endif
