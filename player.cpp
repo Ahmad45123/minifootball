@@ -9,7 +9,8 @@ class Player {
     float angle=0.0;
     double curX = 0, curY = -0.05, curZ = 0;
     double dirX = 0, dirZ = 1;
-    double STEP_SIZE = 0.001;
+    double STEP_SIZE = 0.003;
+    float ANGLE_SPEED = 0.05f;
 
     bool keys[256];
 
@@ -26,35 +27,33 @@ class Player {
     }
 
     void tick() {
-        static float fraction = 0.001f;
-        static float angleSpeed = 0.05f;
 
         if(keys['w']){
-            curX += dirX * fraction;
-            curZ += dirZ * fraction;
+            curX += dirX * STEP_SIZE;
+            curZ += dirZ * STEP_SIZE;
         }
         if(keys['s']) {
-            curX -= dirX * fraction;
-            curZ -= dirZ * fraction;
+            curX -= dirX * STEP_SIZE;
+            curZ -= dirZ * STEP_SIZE;
         }
 
         if(keys['d']) {
-            angle += angleSpeed;
+            angle += ANGLE_SPEED;
             double olddirX = dirX;
-            dirX = cos(angleSpeed)*dirX + sin(angleSpeed)*dirZ;
-            dirZ = -sin(angleSpeed)*olddirX + cos(angleSpeed)*dirZ;
+            dirX = cos(ANGLE_SPEED)*dirX + sin(ANGLE_SPEED)*dirZ;
+            dirZ = -sin(ANGLE_SPEED)*olddirX + cos(ANGLE_SPEED)*dirZ;
         }
         if(keys['a']) {
-            angle -= angleSpeed;
+            angle -= ANGLE_SPEED;
             double olddirX = dirX;
-            dirX = cos(-angleSpeed)*dirX + sin(-angleSpeed)*dirZ;
-            dirZ = -sin(-angleSpeed)*olddirX + cos(-angleSpeed)*dirZ;
+            dirX = cos(-ANGLE_SPEED)*dirX + sin(-ANGLE_SPEED)*dirZ;
+            dirZ = -sin(-ANGLE_SPEED)*olddirX + cos(-ANGLE_SPEED)*dirZ;
         }
 
         // check if collides with ball
         if(curX > ball->curX - 0.01 && curX < ball->curX + 0.01) {
             if(curZ > ball->curZ - 0.01 && curZ < ball->curZ + 0.01) {
-                ball->kick(dirX, dirZ, 150);
+                ball->kick(dirX, dirZ, 50);
             }
         }
     }
