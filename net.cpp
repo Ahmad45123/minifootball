@@ -32,7 +32,7 @@ namespace net {
         glPushMatrix();
             glTranslated(netX, 0, netZ);
             glRotated(90, 0, 1, 0);
-            glColor3f(0.00, 1.00, 1.00);
+            glColor3f(0.89, 0.89, 0.78);
 
             glutSolidSphere(0.01, 50, 50);
 
