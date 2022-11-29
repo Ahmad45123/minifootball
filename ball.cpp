@@ -1,9 +1,9 @@
 #ifndef BALLFILE
 #define BALLFILE
 
-#include "iostream"
 #include <GL/glut.h>
 
+#include "textureLoader.cpp"
 #include "net.cpp"
 
 class Ball {
@@ -13,6 +13,12 @@ class Ball {
     double STEP_SIZE = 0;
     double MAX_STEP_SIZE = 0.008;
     int moveFor = 0;
+
+    GLuint texture;
+
+    Ball() {
+        texture = TextureLoader::loadBitmap("textures/football.bmp");
+    }
 
     void tick() {
         // check if collides with net
@@ -48,7 +54,18 @@ class Ball {
         glPushMatrix();
         glTranslated(curX, curY, curZ);
         glColor3f(1, 1, 1);
-        glutSolidSphere(0.01, 50, 50);
+        glDisable(GL_COLOR);
+        glEnable(GL_TEXTURE_2D);
+
+        GLUquadricObj *quadricObj = gluNewQuadric();
+        gluQuadricDrawStyle(quadricObj, GLU_FILL);
+        glBindTexture(GL_TEXTURE_2D, texture);
+        gluQuadricTexture(quadricObj, GL_TRUE);
+        gluQuadricNormals(quadricObj, GLU_SMOOTH);
+        gluSphere(quadricObj, 0.01, 50, 50);
+
+        glDisable(GL_TEXTURE_2D);
+        glEnable(GL_COLOR);
         glPopMatrix();
     }
 };
