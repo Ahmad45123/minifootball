@@ -37,13 +37,13 @@ class Player {
             curZ -= dirZ * STEP_SIZE;
         }
 
-        if(keys['d']) {
+        if(keys['a']) {
             angle += ANGLE_SPEED;
             double olddirX = dirX;
             dirX = cos(ANGLE_SPEED)*dirX + sin(ANGLE_SPEED)*dirZ;
             dirZ = -sin(ANGLE_SPEED)*olddirX + cos(ANGLE_SPEED)*dirZ;
         }
-        if(keys['a']) {
+        if(keys['d']) {
             angle -= ANGLE_SPEED;
             double olddirX = dirX;
             dirX = cos(-ANGLE_SPEED)*dirX + sin(-ANGLE_SPEED)*dirZ;

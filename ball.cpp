@@ -1,7 +1,10 @@
 #ifndef BALLFILE
 #define BALLFILE
 
+#include "iostream"
 #include <GL/glut.h>
+
+#include "net.cpp"
 
 class Ball {
     public:
@@ -13,13 +16,20 @@ class Ball {
     int lastUpdated = 0;
 
     void tick() {
-        while(moveFor > 0 && glutGet(GLUT_ELAPSED_TIME) - lastUpdated > 10) {
+        if(moveFor > 0 /*&& glutGet(GLUT_ELAPSED_TIME) - lastUpdated > 10*/) {
             curX += dirX * STEP_SIZE;
             curZ += dirZ * STEP_SIZE;
             moveFor --;
             STEP_SIZE -= 0.0001;
             if(STEP_SIZE < 0.0001) STEP_SIZE = 0.0001;
             lastUpdated = glutGet(GLUT_ELAPSED_TIME);
+        }
+
+        // check if collides with net
+        if(curZ < net::netZ  && curZ > net::netZ - 0.095*2) {
+            if(curX > net::netX + 0.1/2 && curX < net::netX + 0.1) {
+                STEP_SIZE = 0.001;
+            }
         }
     }
 

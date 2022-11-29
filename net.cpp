@@ -1,7 +1,10 @@
+#ifndef NET_FILE
+#define NET_FILE
+
 #include <GL/glut.h>
 
 namespace net {
-    double netX = 0.5, netZ = 0; 
+    double netX = 0.5, netZ = 0.1; 
 
     void drawNetEx() {
         glPushMatrix();
@@ -30,6 +33,8 @@ namespace net {
             glTranslated(netX, 0, netZ);
             glRotated(90, 0, 1, 0);
             glColor3f(0.00, 1.00, 1.00);
+
+            glutSolidSphere(0.01, 50, 50);
 
             glPushMatrix();
                 drawNetEx();
@@ -67,3 +72,5 @@ namespace net {
         glPopMatrix();
     }
 }
+
+#endif
