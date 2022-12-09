@@ -66,6 +66,33 @@ namespace Camera {
         if(keys['k']) {
             curCenterY-= 0.01;
         }
+
+        if(keys['t']) {
+            lx = 0;
+            lz = -1;
+            x = 0;
+            z = 0.43;
+            curCameraY = 1.4;
+            curCenterY = -0.57;
+        }
+
+        if(keys['s']) {
+            lx = 0;
+            lz = -1;
+            x = 0;
+            z = 0.849999547;
+            curCameraY = 0.1;
+            curCenterY = 0.089999999999999983;
+        }
+
+        if(keys['f']) {
+            lx = -0.999941707;
+            lz = -0.0107973665;
+            x = 1.04136741;
+            z = -0.00670977216;
+            curCameraY = 0.28000000000000014;
+            curCenterY = 0.089999999999999983;
+        }
     }
 
     void draw() {

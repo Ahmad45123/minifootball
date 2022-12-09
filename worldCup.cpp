@@ -4,7 +4,7 @@ namespace WorldCup {
     void draw() {
         glPushMatrix();
         glColor3f(0.88, 0.67, 0.41);
-        glTranslated(0, -0.01, 0.58);
+        glTranslated(0.4, -0.01, 0.58);
             //drawSphere
             glPushMatrix();
             glTranslated(0, 0.065, 0);

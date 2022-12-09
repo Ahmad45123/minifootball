@@ -60,7 +60,7 @@ void renderScene() {
 int main(int argc, char** argv) {
 	glutInit(&argc, argv);
 
-	glutInitWindowSize(1000, 1000);
+	glutInitWindowSize(1500, 1000);
 	glutInitWindowPosition(50, 50);
 
 	glutCreateWindow("FIFA 2022");
