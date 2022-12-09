@@ -50,7 +50,7 @@ class Player {
 
         // check if collides with ball
         double distToBall = sqrt(pow(curX - ball->curX, 2) + pow(curZ - ball->curZ, 2));
-        if(distToBall <= 0.01) {
+        if(distToBall <= 0.02) {
             ball->kick(dirX, dirZ, 50);
         }
     }

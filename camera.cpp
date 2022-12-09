@@ -7,6 +7,7 @@ namespace Camera {
     float lx=0.0f,lz=-1.0f;
     float x=0.0f,z=0.2f;
     double curCameraY = 0.1;
+    double curCenterY = -0.1;
     bool keys[256] = {};
     bool specialKeys[256] = {};
 
@@ -58,11 +59,18 @@ namespace Camera {
         if(keys['l']) {
             curCameraY-= 0.01;
         }
+
+        if(keys['o']) {
+		    curCenterY+= 0.01;
+	    }
+        if(keys['k']) {
+            curCenterY-= 0.01;
+        }
     }
 
     void draw() {
         gluLookAt(	x, curCameraY, z,
-			x+lx, -0.1,  z+lz,
+			x+lx, curCenterY,  z+lz,
 			0.0f, 1.0f,  0.0f);
     }
 }
