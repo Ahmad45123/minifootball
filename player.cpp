@@ -1,4 +1,5 @@
 #include <GL/glut.h>
+#include <math.h>
 
 #include "ball.cpp"
 
