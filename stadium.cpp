@@ -16,7 +16,7 @@ namespace Stadium {
         groundTexture = TextureLoader::loadBitmap("textures/grass.bmp");
         egyptTexture = TextureLoader::loadBitmap("textures/egypt_flag.bmp");
         ukTexture = TextureLoader::loadBitmap("textures/uk_flag.bmp");
-        germanyTexture = TextureLoader::loadBitmap("textures/germany_flag.bmp");
+        germanyTexture = TextureLoader::loadBitmap("textures/japan_flag.bmp");
     }
 
     void drawFlag() {
