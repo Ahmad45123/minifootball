@@ -4,6 +4,7 @@
 #include "textureLoader.cpp"
 #include "net.cpp"
 #include "benches.cpp"
+#include "worldCup.cpp"
 
 namespace Stadium {
     
@@ -74,5 +75,8 @@ namespace Stadium {
         glPopMatrix();
         glDisable(GL_TEXTURE_2D);
         glEnable(GL_COLOR);
+
+        // Draw worldcup
+        WorldCup::draw();
     }
 }
