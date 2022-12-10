@@ -13,6 +13,7 @@ class Ball {
     double STEP_SIZE = 0;
     double MAX_STEP_SIZE = 0.008;
     int moveFor = 0;
+    bool isInGoal = false;
 
     GLuint texture;
     GLUquadricObj *quadricObj;
@@ -27,6 +28,7 @@ class Ball {
         if(curZ < net::netZ  && curZ > net::netZ - 0.095*2) {
             if(curX > net::netX + 0.1/2 && curX < net::netX + 0.1) {
                 STEP_SIZE = 0.001;
+                isInGoal = true;
             }
         }
 

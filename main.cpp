@@ -1,5 +1,8 @@
 #include <GL/glut.h>
 #include <math.h>
+#include <string>
+
+using namespace std;
 
 #include "camera.cpp"
 #include "player.cpp"
@@ -8,6 +11,8 @@
 
 Player *player;
 Ball *ball;
+int timeRemaining = 60;
+bool hasLost, hasWon;
 
 void keyDown(unsigned char c, int x, int y) {
 	Camera::keyDown(c);
@@ -28,6 +33,23 @@ void timerFunc(int tmp) {
 	Camera::tick();
 	player->tick();
 	ball->tick();
+
+	// decrement time if a second has passed
+	static int lastTime = glutGet(GLUT_ELAPSED_TIME);
+	int currentTime = glutGet(GLUT_ELAPSED_TIME);
+	if(currentTime - lastTime > 1000) {
+		timeRemaining--;
+		if(timeRemaining == 0) {
+			hasLost = true;
+		}
+		lastTime = currentTime;
+	}
+
+	// check win
+	if(ball->isInGoal) {
+		hasWon = true;
+	}
+
 	glutTimerFunc(10, timerFunc, 0);
     glutPostRedisplay();
 }
@@ -43,8 +65,43 @@ void changeSize(int w, int h) {
 	glMatrixMode(GL_MODELVIEW);
 }
 
+void drawString(string str, int x, int y, bool small = false) {
+  glPushMatrix();
+  glRasterPos2i(x, y);
+  for( size_t i = 0; i < str.size(); ++i ) {
+      glutBitmapCharacter(small ? GLUT_BITMAP_TIMES_ROMAN_10 : GLUT_BITMAP_TIMES_ROMAN_24, (int)str[i] );
+  }
+  glPopMatrix();
+}
+
 void renderScene() {
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(0, 1500, 1000, 0, -1, 1);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	if(hasLost) {
+        glColor3f(1, 0, 0);
+        drawString("You lost!", 450, 600);
+        glutSwapBuffers();
+        return;
+    }
+    if(hasWon) {
+        glColor3f(0, 1, 0);
+        drawString("You won :D", 450, 600);
+        glutSwapBuffers();
+        return;
+    }
+
+	// Draw time remaining
+	glPushMatrix();
+		drawString("Time remaining: " + to_string(timeRemaining), 10, 30);
+	glPopMatrix();
+
+	changeSize(1500, 1000);
+	glClear(GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
 	Camera::draw();
@@ -53,6 +110,7 @@ void renderScene() {
 
 	player->draw();
 	ball->draw();
+
 
 	glutSwapBuffers();
 }
